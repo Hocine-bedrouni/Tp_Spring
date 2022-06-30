@@ -1,6 +1,8 @@
 package fr.example.tp_spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="matiere")
@@ -11,12 +13,18 @@ public class Matiere {
     private Long id;
 
     @Column
+    @NotNull
+    @Size(max=30)
     private String name;
 
     @Column
+    @NotNull
+    @Size(max=30)
     private int duration;
 
     @Column
+    @NotNull
+    @Size(max=60)
     private String difficulty;
 
     //Constructor

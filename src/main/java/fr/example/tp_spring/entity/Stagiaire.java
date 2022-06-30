@@ -3,14 +3,19 @@ package fr.example.tp_spring.entity;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
 @Table(name="stagiaire")
 @DiscriminatorValue("Stagiaire")
+@PrimaryKeyJoinColumn(name="stagiaire_id", referencedColumnName="id")
 public class Stagiaire extends Person{
 
     @Column
+    @NotNull
+    @Size(max=15)
     Date birthdate;
 
     @OneToOne(targetEntity = Formateur.class)
@@ -23,10 +28,10 @@ public class Stagiaire extends Person{
     public Stagiaire() {
     }
 
-    public Stagiaire(Long id, String civility, String lastname, String firstname, String email, int adress_id, int formateur_id, Date birthdate, int formateur_id1) {
-        super(id, civility, lastname, firstname, email, adress_id, formateur_id);
+    public Stagiaire(Long id, String civility, String lastname, String firstname, String email, int adress_id, Date birthdate, int formateur_id) {
+        super(id, civility, lastname, firstname, email, adress_id);
         this.birthdate = birthdate;
-        this.formateur_id = formateur_id1;
+        this.formateur_id = formateur_id;
     }
 
     // Getteurs et Setteurs
@@ -38,15 +43,5 @@ public class Stagiaire extends Person{
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
-    }
-
-    @Override
-    public int getFormateur_id() {
-        return formateur_id;
-    }
-
-    @Override
-    public void setFormateur_id(int formateur_id) {
-        this.formateur_id = formateur_id;
     }
 }

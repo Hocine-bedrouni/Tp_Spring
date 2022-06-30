@@ -1,12 +1,16 @@
 package fr.example.tp_spring.entity;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
 @Table(name="person")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="TYPE_PERSONNE")
 public abstract class Person {
 
@@ -15,24 +19,29 @@ public abstract class Person {
     private Long id;
 
     @Column
+    @NotNull
+    @Size(max=20)
     private String civility;
 
     @Column
+    @NotNull
+    @Size(max=50)
     private String lastname;
 
     @Column
+    @NotNull
+    @Size(max=50)
     private String firstname;
 
     @Column
+    @NotNull
+    @Size(max=60)
     private String email;
 
     @OneToOne(targetEntity = Adress.class)
     @JoinColumn(name="adress_id")
     int adress_id;
 
-    @OneToOne(targetEntity = Formateur.class)
-    @JoinColumn(name="formateur_id")
-    private int formateur_id;
 
     // Constructeur
 
@@ -40,14 +49,13 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(Long id, String civility, String lastname, String firstname, String email, int adress_id, int formateur_id) {
+    public Person(Long id, String civility, String lastname, String firstname, String email, int adress_id) {
         this.id = id;
         this.civility = civility;
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
         this.adress_id = adress_id;
-        this.formateur_id = formateur_id;
     }
 
     // Getteurs et Setteurs
@@ -99,13 +107,5 @@ public abstract class Person {
 
     public void setAdress_id(int adress_id) {
         this.adress_id = adress_id;
-    }
-
-    public int getFormateur_id() {
-        return formateur_id;
-    }
-
-    public void setFormateur_id(int formateur_id) {
-        this.formateur_id = formateur_id;
     }
 }

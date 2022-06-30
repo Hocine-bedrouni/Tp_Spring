@@ -1,6 +1,8 @@
 package fr.example.tp_spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="adress")
@@ -11,15 +13,22 @@ public class Adress {
     private int id;
 
     @Column
+    @NotNull
+    @Size(max=60)
     private String street;
 
     @Column
+    @Size(max=60)
     private String complement;
 
     @Column
+    @NotNull
+    @Size(max=30)
     private String city;
 
     @Column
+    @NotNull
+    @Size(max=30)
     private String country;
 
     //Constructor
